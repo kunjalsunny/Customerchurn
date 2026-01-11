@@ -25,9 +25,9 @@ class DataValidation:
         with open(self.config.report_path,"w",encoding='utf-8') as f:
             f.write('\n'.join(Lines))
     
-    def validate_dataframe(self,df:pd.DataFrame,label:str) -> (bool, List[str]):
+    def validate_dataframe(self,df:pd.DataFrame):
       
-        report = [f"========== {label} VALIDATION =========="]
+        report = []
         overall_ok = True
 
         # required
@@ -109,7 +109,7 @@ class DataValidation:
 
 
         self.write_report(report)
-        return overall_ok
+        return overall_ok,report
 
 
     def initiate_data_validation(self,train_path:str,test_path:str) :
@@ -119,13 +119,18 @@ class DataValidation:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
             
-            train_ok = self.validate_dataframe(train_df,"Train")
-            test_ok = self.validate_dataframe(test_df,"Test")
+            train_ok, train_report = self.validate_dataframe(train_df)
+            test_ok, test_report = self.validate_dataframe(test_df)
 
             if not (train_ok and test_ok):
                 raise ValueError(f"Data Validation failed. Check report at {self.config.report_path}")
             
+            final_report = ["===== TRAIN ====="] + train_report + ["", "===== TEST ====="] + test_report
+            self.write_report(final_report)
+
             logging.info("Validation is complete. Data report saved at {self.config.report_path}")
+
+
             return self.config.report_path
 
         except Exception as e:
