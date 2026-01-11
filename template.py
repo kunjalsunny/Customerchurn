@@ -8,6 +8,8 @@ project_name = "customerchurn"
 
 list_of_files = [
     f"src/{project_name}/__init__.py",
+    f"src/{project_name}/configs/config.yaml",
+    f"src/{project_name}/configs/schema.yaml",
     f"src/{project_name}/components/__init__.py",
     f"src/{project_name}/components/data_ingestion.py",
     f"src/{project_name}/components/data_transformation.py",
