@@ -12,6 +12,7 @@ list_of_files = [
     f"src/{project_name}/configs/schema.yaml",
     f"src/{project_name}/components/__init__.py",
     f"src/{project_name}/components/data_ingestion.py",
+    f"src/{project_name}/components/data_validation.py",
     f"src/{project_name}/components/data_transformation.py",
     f"src/{project_name}/components/model_trainer.py",
     f"src/{project_name}/components/model_monitoring.py",
