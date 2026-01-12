@@ -4,7 +4,7 @@ from src.customerchurn.utils import read_yaml
 
 import pandas as pd
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 import os
 import sys
 
@@ -25,9 +25,9 @@ class DataValidation:
         with open(self.config.report_path,"w",encoding='utf-8') as f:
             f.write('\n'.join(Lines))
     
-    def validate_dataframe(self,df:pd.DataFrame):
+    def validate_dataframe(self,df:pd.DataFrame) -> Tuple[bool,List[str]]:
       
-        report = []
+        report:List[str] = []
         overall_ok = True
 
         # required
@@ -40,8 +40,7 @@ class DataValidation:
             report.append("[PASS] All required columns are present")
 
         if not overall_ok:
-            self.write_report(report)
-            return False
+            return overall_ok, report
         
         # 2. Target Checks
         target_cols = self.schema.get('target_column')
@@ -128,7 +127,7 @@ class DataValidation:
             final_report = ["===== TRAIN ====="] + train_report + ["", "===== TEST ====="] + test_report
             self.write_report(final_report)
 
-            logging.info("Validation is complete. Data report saved at {self.config.report_path}")
+            logging.info(f"Validation is complete. Data report saved at {self.config.report_path}")
 
 
             return self.config.report_path
