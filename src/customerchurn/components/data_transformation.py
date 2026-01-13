@@ -48,7 +48,7 @@ class DataTransformation:
             df["TotalCharges"] = pd.to_numeric(s,errors="coerce")
 
         if "tenure" in df.columns:
-            mask = (df["tenure"] == 0 & df["tenure"].isna())
+            mask = (df["tenure"] == 0) & (df["tenure"].isna())
             df.loc[mask,"TotalCharges"] = 0.0
 
         return df
