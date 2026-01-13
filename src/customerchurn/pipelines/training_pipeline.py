@@ -4,6 +4,7 @@ import sys
 
 from src.customerchurn.components.data_ingestion import DataIngestion
 from src.customerchurn.components.data_validation import DataValidation
+from src.customerchurn.components.data_transformation import DataTransformation
 
 
 class TrainPipeline():
@@ -20,11 +21,20 @@ class TrainPipeline():
             # Validation
             validator = DataValidation()
             report_path = validator.initiate_data_validation(train_path,test_path)
+            
 
             logging.info(f"Validation Passed. Report: {report_path}")
-            logging.info("=======Train Pipeline Completed=======")
 
-            return report_path            
+            transformer = DataTransformation()
+            X_train_path, X_test_path, y_train_path, y_test_path, preproc_path = transformer.initiate_data_transformation(
+                train_path,test_path
+            )
+
+            logging.info("=======Train Pipeline Completed=======")
+            
+
+            return report_path    
+                
 
 
         except Exception as e:

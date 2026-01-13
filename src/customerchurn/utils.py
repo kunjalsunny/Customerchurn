@@ -3,6 +3,7 @@ import os
 from src.customerchurn.exception import CustomException
 import sys
 from pathlib import Path
+import pickle
 
 def read_yaml(path:str) -> dict:
     try:
@@ -20,3 +21,15 @@ def read_yaml(path:str) -> dict:
         return data
     except Exception as e:
         raise CustomException(e,sys)
+    
+
+
+def save_object(file_path:str,obj) -> None:
+    os.makedirs(os.path.dirname(file_path),exist_ok=True)
+    with open(file_path,"wb") as f:
+        pickle.dump(obj,f)
+    
+
+def load_object(file_path:str):
+    with open(file_path,"rb") as f:
+        return pickle.load(f)
