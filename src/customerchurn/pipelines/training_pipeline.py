@@ -5,6 +5,7 @@ import sys
 from src.customerchurn.components.data_ingestion import DataIngestion
 from src.customerchurn.components.data_validation import DataValidation
 from src.customerchurn.components.data_transformation import DataTransformation
+from src.customerchurn.components.model_trainer import ModelTrainer     
 
 
 class TrainPipeline():
@@ -29,6 +30,12 @@ class TrainPipeline():
             X_train_path, X_test_path, y_train_path, y_test_path, preproc_path = transformer.initiate_data_transformation(
                 train_path,test_path
             )
+
+            trainer = ModelTrainer()
+            model_path,metrics_path = trainer.initiate_model_trainer(
+                X_train_path,X_test_path,y_train_path,y_test_path
+            )
+            logging.info(f"Training model is completed. Model:{model_path} | Metrics: {metrics_path}")
 
             logging.info("=======Train Pipeline Completed=======")
             
