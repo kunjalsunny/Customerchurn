@@ -4,6 +4,8 @@ from src.customerchurn.exception import CustomException
 import sys
 from pathlib import Path
 import pickle
+import json
+import numpy as np
 
 def read_yaml(path:str) -> dict:
     try:
@@ -21,7 +23,24 @@ def read_yaml(path:str) -> dict:
         return data
     except Exception as e:
         raise CustomException(e,sys)
+
+def load_numpy(file_path:str):
+    try:
+        arr = np.load(file_path,allow_pickle=True)
+        if isinstance(arr,np.ndarray) and arr.shape ==():
+            return arr.item()
+        return arr
+    except Exception as e:
+        raise CustomException(e,sys)
     
+def save_json(file_path:str,data:dict) -> None:
+    try:
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        with open(file_path,'w',encoding='utf-8') as f:
+            json.dump(data,f,indent=2)
+
+    except Exception as e:
+        raise CustomException(e,sys)
 
 
 def save_object(file_path:str,obj) -> None:
