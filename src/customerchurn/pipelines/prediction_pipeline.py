@@ -28,7 +28,7 @@ class PredictionPipeline:
             df = pd.DataFrame([input_dict])
             
             X = self.processor.transform(df)
-            proba = float(self.model.predict_proba(X)[:,1])
+            proba = float(self.model.predict_proba(X)[0, 1])
             pred = int(proba >= self.threshold)
             label = "Yes" if proba>=self.threshold else "No"
 
