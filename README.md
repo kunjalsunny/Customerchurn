@@ -15,7 +15,7 @@ What can be done to retained them?
 Predict which customers are likely to churn so the business can target retention actions efficiently.
 
 #### Data & Setup ####
-Target: Churn (Yes → 1, No → 0)
+Target: Churn (Yes = 1, No = 0)
 Evaluation: Stratified K-Fold Cross-Validation
 Selection metric: PR-AUC (better for imbalanced churn data than ROC-AUC)
 Threshold tuning: chose probability threshold that maximized F1 on CV out-of-fold predictions
@@ -51,13 +51,15 @@ TP: 266
 
 ### Interpretation ###
 
-At threshold 0.35:The model catches 71% of churners (high recall → fewer missed churners).About 56% of churn predictions are correct. There are 206 false alarms.This threshold is a good choice when missing churners is more expensive than contacting extra customers.
+At threshold 0.35: The model catches 71% of churners (high recall = fewer missed churners).
+About 56% of churn predictions are correct. There are 206 false alarms. 
+This threshold is a good choice when missing churners is more expensive than contacting extra customers.
 
 Recommendation: how to adjust threshold
 Want fewer false positives (less outreach cost)? → increase threshold (e.g., 0.45–0.60)
 Want catch more churners (maximize recall)? → decrease threshold (e.g., 0.25–0.35)
 
 #### Artifacts Produced ####
-artifacts/models/best_model.pkl → trained best model
-artifacts/metrics/best_model_metrics.json → final test metrics + threshold
-artifacts/metrics/leaderboard.csv → CV leaderboard for all candidate models
+artifacts/models/best_model.pkl -→ trained best model
+artifacts/metrics/best_model_metrics.json -→ final test metrics + threshold
+artifacts/metrics/leaderboard.csv -→ CV leaderboard for all candidate models
