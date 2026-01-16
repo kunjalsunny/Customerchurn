@@ -92,14 +92,14 @@ class ModelImprovement:
     def _get_candidates(self):
         candidates = []
 
-        # 1) Logistic Regression (tune C)
+        # 1) Logistic Regression 
         for C in [0.1, 1.0, 5.0, 10.0]:
             candidates.append((
                 f"logreg_C{C}",
                 LogisticRegression(max_iter=2000, class_weight="balanced", C=C)
             ))
 
-        # 2) SGD Logistic (fast)
+        # 2) SGD Logistic
         for alpha in [1e-4, 1e-3, 1e-2]:
             candidates.append((
                 f"sgd_log_alpha{alpha}",
